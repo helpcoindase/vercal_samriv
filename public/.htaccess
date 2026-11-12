@@ -1,0 +1,8 @@
+Options -MultiViews
+RewriteEngine On
+DirectoryIndex index.html
+
+# Let Apache serve exported files and route directories with index.html.
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
