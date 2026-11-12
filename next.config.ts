@@ -99,6 +99,14 @@ const nextConfig: NextConfig = {
     const backendUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
     return [
       {
+        source: '/retreat',
+        destination: '/retreat/index.html',
+      },
+      {
+        source: '/retreat/thankyou',
+        destination: '/retreat/thankyou.html',
+      },
+      {
         source: '/images/blogs/:path*',
         destination: `${backendUrl}/images/blogs/:path*`,
       },
