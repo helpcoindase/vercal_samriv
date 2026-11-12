@@ -4,7 +4,9 @@
  */
 
 export const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
+  process.env.NEXT_PUBLIC_API_URL && !process.env.NEXT_PUBLIC_API_URL.includes('localhost')
+    ? process.env.NEXT_PUBLIC_API_URL
+    : (typeof window !== 'undefined' ? '' : (process.env.BASEURL || ''));
 
 export async function fetchApi(endpoint: string, options: RequestInit = {}) {
   const url = endpoint.startsWith('http')
@@ -44,7 +46,11 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
 
 export function getImageUrl(imagePath?: string | null): string {
   if (!imagePath) return '/assets/images/placeholder.webp';
-  if (imagePath.startsWith('http://') || imagePath.startsWith('https://')) {
+  if (
+    imagePath.startsWith('http://') ||
+    imagePath.startsWith('https://') ||
+    imagePath.startsWith('data:')
+  ) {
     return imagePath;
   }
   const cleanPath = imagePath.startsWith('/') ? imagePath.slice(1) : imagePath;
